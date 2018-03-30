@@ -11,15 +11,15 @@ class Population {
     Population(int queenCount) {
         // set queens
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < queenCount; i++) builder.append(GlobalVariable.theCell);
+        for (int i = 0; i < queenCount; i++) builder.append(GlobalVariable.CELL);
         chromosomes = new String[queenCount];
-        for (int i = 0 ; i < queenCount; i++) {
+        for (int i = 0; i < queenCount; i++) {
             int position = ((int) (Math.random() * 10)) % queenCount;
-            builder.setCharAt(position, GlobalVariable.theQueen);
+            builder.setCharAt(position, GlobalVariable.QUEEN);
             this.chromosomes[i] = builder.toString();
-            builder.setCharAt(position, GlobalVariable.theCell);
+            builder.setCharAt(position, GlobalVariable.CELL);
         }
-        this.collision = Controller.fitness(this) / 2;
+        this.collision = Controller.fitness(this);
     }
 
     public String getChromosome(int position) {
