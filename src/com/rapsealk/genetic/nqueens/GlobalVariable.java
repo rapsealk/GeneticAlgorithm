@@ -5,15 +5,11 @@ package com.rapsealk.genetic.nqueens;
  */
 public class GlobalVariable {
 
-    public static final char QUEEN                  = 'Q';
-    public static final char CELL                   = 'X';
-
     public static final int TOTAL_EPOCH             = 100000;
 
     public static final int NUMBER_OF_QUEENS        = 8;
-    public static final int NUMBER_OF_POPULATIONS   = 100;
-    public static final int NUMBER_OF_ELITE_GENES   = 10;
+    public static final int NUMBER_OF_POPULATIONS   = 10;
 
-    public static final double RATE_FALL            = 0.2;
+    public static final double RATE_FALL            = 0.5;
     public static final double RATE_MUTATION        = 0.0004;   // 0.04%
 }
