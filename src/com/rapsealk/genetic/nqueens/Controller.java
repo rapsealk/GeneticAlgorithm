@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class Controller {
 
+    public static int mutationCount = 0;
+
     public Controller() {
 
     }
@@ -22,10 +24,6 @@ public class Controller {
         String genoX = one.getGenotype();
         String genoY = other.getGenotype();
         int position = (int)(Math.random() * 10) % GlobalVariable.NUMBER_OF_QUEENS;
-        //one.setGenotype(genoX.substring(0, position) + genoY.substring(position));
-        //other.setGenotype(genoY.substring(0, position) + genoX.substring(position));
-        //one.setCollision(fitness(one));
-        //other.setCollision(fitness(other));
         List<Chromosome> newChromosomes = new ArrayList<>();
         newChromosomes.add(new Chromosome(genoX.substring(0, position) + genoY.substring(position)));
         newChromosomes.add(new Chromosome(genoY.substring(0, position) + genoX.substring(position)));
@@ -39,10 +37,12 @@ public class Controller {
     public static void mutate(Chromosome chromosome) {
         boolean isNaturalMutation = (Math.random() >= (1 - GlobalVariable.RATE_MUTATION));
         if (!isNaturalMutation) return;
+        // System.out.printf("Mutation count: %d\n", ++mutationCount);
         int position = (int)(Math.random() * 10) % GlobalVariable.NUMBER_OF_QUEENS;
         int newGene = (int)(Math.random() * 10) % GlobalVariable.NUMBER_OF_QUEENS;
         String newGenotype = chromosome.getGenotype().substring(0, position) + newGene + chromosome.getGenotype().substring(position+1);
         chromosome.setGenotype(newGenotype);
+        mutationCount += 1;
     }
 
     /**
@@ -57,6 +57,7 @@ public class Controller {
             for (int j = 0; j < GlobalVariable.NUMBER_OF_QUEENS; j++) {
                 if (i == j) continue;
                 if (gene == chromosome.getGenotype().charAt(j)) penalty += 1;
+                else if (Math.abs(gene - chromosome.getGenotype().charAt(j)) == Math.abs(i - j)) penalty += 1;
             }
         }
         return (penalty / 2);
@@ -73,9 +74,8 @@ public class Controller {
     }
 
     public static void log(ArrayList<Chromosome> pool, int maxLines) {
-        for (int i = 0; i < GlobalVariable.NUMBER_OF_POPULATIONS; i++) {
+        for (int i = 0; i < GlobalVariable.NUMBER_OF_POPULATIONS && i < maxLines; i++) {
             System.out.printf("Chromosome[%d]: %s, fitness: %d\n", i+1, pool.get(i).getGenotype(), -1 * pool.get(i).getCollision());
-            if (i == maxLines) break;
         }
     }
 

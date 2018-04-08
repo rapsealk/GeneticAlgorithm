@@ -32,12 +32,12 @@ public class Main {
             // System.out.printf("pool.size(): %d / aliveIndex: %d\n", pool.size(), aliveCount);
             for (int i = 0; i < aliveCount; i++) {
                 List<Chromosome> children = Controller.crossover(pool.get(i), pool.get((i+1) % aliveCount));
-                for (Chromosome chromosome: children) pool.add(chromosome);
+                pool.addAll(children);
             }
             // mutate
             for (int i = 0; i < GlobalVariable.NUMBER_OF_POPULATIONS; i++) Controller.mutate(pool.get(i));
             // log the next generation
-            System.out.printf("Generation %d / %d\n", (GlobalVariable.TOTAL_EPOCH - epoch + 1), GlobalVariable.TOTAL_EPOCH);
+            System.out.printf("Generation %d / %d, best fitness: %d\n", (GlobalVariable.TOTAL_EPOCH - epoch + 1), GlobalVariable.TOTAL_EPOCH, pool.get(0).getCollision() * -1);
             // Controller.log(pool);
         }
 
@@ -46,5 +46,7 @@ public class Main {
         Controller.log(pool, 20);
         System.out.printf("Epoch: %d\n", (GlobalVariable.TOTAL_EPOCH - epoch));
         Controller.draw(pool.get(0));
+        Controller.fitness(pool.get(0));
+        System.out.printf("Total Mutation Count: %d (ratio: %f)\n", Controller.mutationCount, ((double)Controller.mutationCount / (GlobalVariable.TOTAL_EPOCH - epoch)));
     }
 }
