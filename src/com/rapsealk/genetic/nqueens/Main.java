@@ -29,7 +29,6 @@ public class Main {
             int aliveCount = (int) (GlobalVariable.NUMBER_OF_POPULATIONS * (1 - GlobalVariable.RATE_FALL));
             pool = new ArrayList<>(pool.subList(0, aliveCount));
             // crossover
-            // System.out.printf("pool.size(): %d / aliveIndex: %d\n", pool.size(), aliveCount);
             for (int i = 0; i < aliveCount; i++) {
                 List<Chromosome> children = Controller.crossover(pool.get(i), pool.get((i+1) % aliveCount));
                 pool.addAll(children);
@@ -38,7 +37,6 @@ public class Main {
             for (int i = 0; i < GlobalVariable.NUMBER_OF_POPULATIONS; i++) Controller.mutate(pool.get(i));
             // log the next generation
             System.out.printf("Generation %d / %d, best fitness: %d\n", (GlobalVariable.TOTAL_EPOCH - epoch + 1), GlobalVariable.TOTAL_EPOCH, pool.get(0).getCollision() * -1);
-            // Controller.log(pool);
         }
 
         Controller.order(pool);

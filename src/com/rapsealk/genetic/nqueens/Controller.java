@@ -46,7 +46,7 @@ public class Controller {
     }
 
     /**
-     * Calculate collision point (the lower the better)
+     * Count collisions (the lower the better)
      * @param chromosome is a single chromosome.
      * @return half penalty.
      */
